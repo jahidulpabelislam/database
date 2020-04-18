@@ -15,6 +15,7 @@
         "pdo"
     ],
     "require": {
+        "php" : "^7.1",
         "ext-pdo": "*"
     },
     "autoload": {
