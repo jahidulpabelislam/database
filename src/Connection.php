@@ -1,13 +1,11 @@
 <?php
 /**
- * Connects to a database and set up to send and receive data.
+ * Simple class wrapped around PDO with convenient methods.
  *
- * MySQL & PDO specific.
- *
- * PHP version 7.1+
+ * (MySQL & PDO specific.)
  *
  * @author Jahidul Pabel Islam <me@jahidulpabelislam.com>
- * @copyright 2010-2020 JPI
+ * @copyright 2010-2021 JPI
  */
 
 namespace JPI\Database;
@@ -23,6 +21,7 @@ class Connection {
     /**
      * Connects to a MySQL engine using PDO.
      *
+     * @param $config array
      * @throws \JPI\Database\Exception
      */
     public function __construct(array $config = []) {
@@ -59,8 +58,8 @@ class Connection {
      * Executes a SQL query.
      *
      * @param $query string The SQL query to run
-     * @param $params array Array of any params/bindings to use with the SQL query
-     * @return PDOStatement
+     * @param $params array|null Array of any params/bindings to use with the SQL query
+     * @return \PDOStatement
      * @throws \JPI\Database\Exception
      */
     private function run(string $query, ?array $params): PDOStatement {
@@ -91,6 +90,10 @@ class Connection {
     }
 
     /**
+     * Executes a SQL query and returns the count of rows affected.
+     *
+     * (Used by INSERT, UPDATE & DELETE queries)
+     *
      * @param $query string
      * @param $params array|null
      * @return int
@@ -102,6 +105,8 @@ class Connection {
     }
 
     /**
+     * Execute a SELECT query and returns the first row (if found).
+     *
      * @param $query string
      * @param $params array|null
      * @return array|null
@@ -119,6 +124,8 @@ class Connection {
     }
 
     /**
+     * Execute a SELECT query and returns all the rows.
+     *
      * @param $query string
      * @param $params array|null
      * @return array[]
@@ -129,6 +136,11 @@ class Connection {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Get the ID from the last INSERT query.
+     *
+     * @return int|null
+     */
     public function getLastInsertedId(): ?int {
         return $this->pdo->lastInsertId();
     }
