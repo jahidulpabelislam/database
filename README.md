@@ -52,7 +52,7 @@ $rows = [
         "id" => 1,
         "first_name" => "Jahidul",
         "last_name" => "Islam",
-        "email" => "jahidul@jahidulpabelislam.com,
+        "email" => "jahidul@jahidulpabelislam.com",
         "password" => "password123",
         ...
     ],
@@ -60,7 +60,7 @@ $rows = [
         "id" => 2,
         "first_name" => "Test",
         "last_name" => "Example",
-        "email" => "test@example.com,
+        "email" => "test@example.com",
         "password" => "password123",
         ...
     ],
@@ -79,7 +79,7 @@ $row = [
     "id" => 1,
     "first_name" => "Jahidul",
     "last_name" => "Islam",
-    "email" => "jahidul@jahidulpabelislam.com,
+    "email" => "jahidul@jahidulpabelislam.com",
     "password" => "password",
     ...
 ];
@@ -95,7 +95,7 @@ $numberOfRowsAffected = $connection->execute(
     [
         "first_name" => "Jahidul",
         "last_name" => "Islam",
-        "email" => "jahidul@jahidulpabelislam.com,
+        "email" => "jahidul@jahidulpabelislam.com",
         "password" => "password",
     ]
 );
