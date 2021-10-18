@@ -55,6 +55,24 @@ class Connection {
     }
 
     /**
+     * Allow access to methods in PDO.
+     *
+     * @param string $method
+     * @param array $arguments
+     * @return mixed
+     */
+    public function __call(string $method, array $arguments) {
+        if (method_exists($this->pdo, $method)) {
+            return call_user_func_array([$this->pdo, $method], $arguments);
+        }
+
+        trigger_error(
+            'Uncaught Error: Call to undefined method ' . static::class . '::' . $method . '()',
+             E_USER_ERROR
+         );
+    }
+
+    /**
      * Executes a SQL query.
      *
      * @param $query string The SQL query to run
@@ -144,5 +162,4 @@ class Connection {
     public function getLastInsertedId(): ?int {
         return $this->pdo->lastInsertId();
     }
-
 }
