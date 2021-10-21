@@ -7,10 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.0.0] - 2020-04-14
+## [1.1.0] - 2021-10-21
+
+### Added
+- add ability to call methods on `PDO` instance
+
+## [1.0.0] - 2021-04-14
 
 First release! :fire:
 
-[unreleased]: https://github.com/jahidulpabelislam/database/compare/v1.0.0...HEAD
-
+[unreleased]: https://github.com/jahidulpabelislam/database/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/jahidulpabelislam/database/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/jahidulpabelislam/database/releases/tag/v1.0.0
