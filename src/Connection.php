@@ -34,10 +34,10 @@ class Connection {
 
         $config = array_merge($defaults, $config);
 
-        $host = $config['host'];
-        $database = $config['database'];
-        $username = $config['username'];
-        $password = $config['password'];
+        $host = $config["host"];
+        $database = $config["database"];
+        $username = $config["username"];
+        $password = $config["password"];
 
         $dsn = "mysql:host={$host};dbname={$database};charset-UTF-8";
         $options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];
@@ -67,7 +67,7 @@ class Connection {
         }
 
         trigger_error(
-            'Uncaught Error: Call to undefined method ' . static::class . '::' . $method . '()',
+            "Uncaught Error: Call to undefined method " . static::class . "::" . $method . "()",
              E_USER_ERROR
          );
     }
