@@ -69,8 +69,8 @@ class Connection {
 
         trigger_error(
             "Uncaught Error: Call to undefined method " . static::class . "::" . $method . "()",
-             E_USER_ERROR
-         );
+            E_USER_ERROR
+        );
     }
 
     /**
