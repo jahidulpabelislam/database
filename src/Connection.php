@@ -74,6 +74,15 @@ class Connection {
     }
 
     /**
+     * Allow access to the PDO instance.
+     *
+     * @return \PDO
+     */
+    public function getPDO(): PDO {
+        return $this->pdo;
+    }
+
+    /**
      * Executes a SQL query.
      *
      * @param $query string The SQL query to run
