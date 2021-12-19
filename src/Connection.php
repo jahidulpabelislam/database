@@ -68,7 +68,7 @@ class Connection {
         }
 
         trigger_error(
-            "Uncaught Error: Call to undefined method " . static::class . "::" . $method . "()",
+            "Uncaught Error: Call to undefined method " . static::class . "::$method()",
             E_USER_ERROR
         );
     }
@@ -128,8 +128,7 @@ class Connection {
      * @throws \JPI\Database\Exception
      */
     public function execute(string $query, ?array $params = null): int {
-        $stmt = $this->run($query, $params);
-        return $stmt->rowCount();
+        return $this->run($query, $params)->rowCount();
     }
 
     /**
@@ -141,9 +140,7 @@ class Connection {
      * @throws \JPI\Database\Exception
      */
     public function getOne(string $query, ?array $params = null): ?array {
-        $stmt = $this->run($query, $params);
-
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $this->run($query, $params)->fetch(PDO::FETCH_ASSOC);
         if ($row !== false) {
             return $row;
         }
@@ -160,8 +157,7 @@ class Connection {
      * @throws \JPI\Database\Exception
      */
     public function getAll(string $query, ?array $params = null): array {
-        $stmt = $this->run($query, $params);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $this->run($query, $params)->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
