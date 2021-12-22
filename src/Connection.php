@@ -110,7 +110,8 @@ class Connection {
         }
         catch (PDOException $error) {
             throw new Exception(
-                "Error executing query on database: {$error->getMessage()}, using query: $query and params: " . print_r($params, true),
+                "Error executing query on database: {$error->getMessage()}, using query: $query and params: "
+                    . print_r($params, true),
                 $error->getCode(),
                 $error->getPrevious()
             );
