@@ -17,7 +17,7 @@ use PDOStatement;
 
 class Connection {
 
-    private $pdo;
+    protected $pdo;
 
     /**
      * Connects to a MySQL engine using PDO.
@@ -90,7 +90,7 @@ class Connection {
      * @return \PDOStatement
      * @throws \JPI\Database\Exception
      */
-    private function run(string $query, ?array $params): PDOStatement {
+    protected function run(string $query, ?array $params): PDOStatement {
         try {
             // Check if any params/bindings to execute
             if (isset($params)) {
