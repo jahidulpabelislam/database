@@ -17,6 +17,10 @@ use PDOStatement;
 
 class Connection {
 
+    /**
+     * @var \PDO
+     * @author Jahidul Islam <jahidul@d3r.com>
+     */
     protected $pdo;
 
     /**
