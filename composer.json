@@ -1,6 +1,6 @@
 {
     "name": "jpi/database",
-    "description": "Simple library to make interactions with a database easier",
+    "description": "Simple extension to PDO",
     "license": "GPL-3.0-only",
     "authors": [
         {

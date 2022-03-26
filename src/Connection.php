@@ -7,82 +7,12 @@ use PDOException;
 use PDOStatement;
 
 /**
- * Simple class wrapped around PDO with convenient methods.
- *
- * (MySQL & PDO specific.)
+ * Simple extension to PDO with some extra convenient methods.
  *
  * @author Jahidul Pabel Islam <me@jahidulpabelislam.com>
- * @copyright 2010-2021 JPI
+ * @copyright 2012-2022 JPI
  */
-class Connection {
-
-    /**
-     * @var \PDO
-     */
-    protected $pdo;
-
-    /**
-     * Connects to a MySQL engine using PDO.
-     *
-     * @param array $config
-     * @throws \JPI\Database\Exception
-     */
-    public function __construct(array $config = []) {
-        $defaults = [
-            "host" => "127.0.0.1",
-            "database" => "",
-            "username" => "root",
-            "password" => "root",
-        ];
-
-        $config = array_merge($defaults, $config);
-
-        $host = $config["host"];
-        $database = $config["database"];
-        $username = $config["username"];
-        $password = $config["password"];
-
-        $dsn = "mysql:host=$host;dbname=$database;charset-UTF-8";
-        $options = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION];
-
-        try {
-            $this->pdo = new PDO($dsn, $username, $password, $options);
-        }
-        catch (PDOException $error) {
-            throw new Exception(
-                "Error creating a connection to database: {$error->getMessage()}",
-                $error->getCode(),
-                $error->getPrevious()
-            );
-        }
-    }
-
-    /**
-     * Allow access to methods in PDO.
-     *
-     * @param string $method
-     * @param array $arguments
-     * @return mixed
-     */
-    public function __call(string $method, array $arguments) {
-        if (method_exists($this->pdo, $method)) {
-            return call_user_func_array([$this->pdo, $method], $arguments);
-        }
-
-        trigger_error(
-            "Uncaught Error: Call to undefined method " . static::class . "::$method()",
-            E_USER_ERROR
-        );
-    }
-
-    /**
-     * Allow access to the PDO instance.
-     *
-     * @return \PDO
-     */
-    public function getPDO(): PDO {
-        return $this->pdo;
-    }
+class Connection extends PDO {
 
     /**
      * Executes a SQL query.
@@ -101,11 +31,11 @@ class Connection {
                     $bindings[":$key"] = $value;
                 }
 
-                $stmt = $this->pdo->prepare($query);
+                $stmt = $this->prepare($query);
                 $stmt->execute($bindings);
             }
             else {
-                $stmt = $this->pdo->query($query);
+                $stmt = $this->query($query);
             }
 
             return $stmt;
@@ -169,6 +99,6 @@ class Connection {
      * @return int|null
      */
     public function getLastInsertedId(): ?int {
-        return $this->pdo->lastInsertId();
+        return $this->lastInsertId();
     }
 }
