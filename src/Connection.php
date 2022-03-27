@@ -3,7 +3,6 @@
 namespace JPI\Database;
 
 use PDO;
-use PDOException;
 use PDOStatement;
 
 /**
@@ -20,34 +19,21 @@ class Connection extends PDO {
      * @param string $query The SQL query to run
      * @param array|null $params Array of any params/bindings to use with the SQL query
      * @return \PDOStatement
-     * @throws \JPI\Database\Exception
+     * @throws \PDOException
      */
     protected function run(string $query, ?array $params = null): PDOStatement {
-        try {
-            // Check if any params/bindings to execute
-            if (isset($params)) {
-                $bindings = [];
-                foreach ($params as $key => $value) {
-                    $bindings[":$key"] = $value;
-                }
-
-                $stmt = $this->prepare($query);
-                $stmt->execute($bindings);
-            }
-            else {
-                $stmt = $this->query($query);
-            }
-
-            return $stmt;
+        if (!isset($params)) {
+            return $this->query($query);
         }
-        catch (PDOException $error) {
-            throw new Exception(
-                "Error executing query on database: {$error->getMessage()}, using query: $query and params: "
-                    . print_r($params, true),
-                $error->getCode(),
-                $error->getPrevious()
-            );
+
+        $bindings = [];
+        foreach ($params as $key => $value) {
+            $bindings[":$key"] = $value;
         }
+
+        $stmt = $this->prepare($query);
+        $stmt->execute($bindings);
+        return $stmt;
     }
 
     /**
@@ -58,7 +44,7 @@ class Connection extends PDO {
      * @param string $query
      * @param array|null $params
      * @return int
-     * @throws \JPI\Database\Exception
+     * @throws \PDOException
      */
     public function execute(string $query, ?array $params = null): int {
         return $this->run($query, $params)->rowCount();
@@ -70,7 +56,7 @@ class Connection extends PDO {
      * @param string $query
      * @param array|null $params
      * @return array|null
-     * @throws \JPI\Database\Exception
+     * @throws \PDOException
      */
     public function getOne(string $query, ?array $params = null): ?array {
         $row = $this->run($query, $params)->fetch(PDO::FETCH_ASSOC);
@@ -87,7 +73,7 @@ class Connection extends PDO {
      * @param string $query
      * @param array|null $params
      * @return array[]
-     * @throws \JPI\Database\Exception
+     * @throws \PDOException
      */
     public function getAll(string $query, ?array $params = null): array {
         return $this->run($query, $params)->fetchAll(PDO::FETCH_ASSOC);
