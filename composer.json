@@ -1,5 +1,6 @@
 {
     "name": "jpi/database",
+    "type": "library",
     "description": "Simple library to make interactions with a database easier",
     "license": "GPL-3.0-only",
     "authors": [
@@ -15,7 +16,7 @@
         "pdo"
     ],
     "require": {
-        "php" : "^7.1",
+        "php" : "^7.0 | ^8.0",
         "ext-pdo": "*"
     },
     "autoload": {

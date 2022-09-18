@@ -1,0 +1,100 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  setup:
+    name: Test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - "7.0"
+          - "7.1"
+          - "7.2"
+          - "7.3"
+          - "7.4"
+          - "8.0"
+          - "8.1"
+    steps:
+      - name: Checkout codebase
+        uses: actions/checkout@v2
+      - id: composer-cache
+        name: Get Composer cache directory
+        shell: bash
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          tools: composer:v2.2, phplint, phpcs, composer-require-checker, composer-unused, dancryer/php-docblock-checker
+      - name: Check Composer 2.2 compatibility
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const { readFile } = require('fs').promises;
+            const composerFilePath = 'composer.json';
+            let composerJSON;
+            try {
+              const data = await readFile(composerFilePath, {
+                encoding: 'utf8',
+              });
+              composerJSON = JSON.parse(data);
+            } catch (e) {
+              core.setFailed(`Failed to read ${composerFilePath}: ${e.message}`);
+              return;
+            }
+            if (null === composerJSON || 'object' !== typeof composerJSON) {
+              core.error('Invalid file contents', {
+                file: composerFilePath,
+              });
+              return;
+            }
+            let packageType = composerJSON.type;
+            if (undefined === packageType) {
+              packageType = 'library';
+              core.warning(`Composer package type is not specified, so it is assumed to be ${packageType}`, {
+                title: 'Missing property "type"',
+                file: composerFilePath,
+              });
+            }
+            if ('project' !== packageType) {
+              return;
+            }
+            const allowPluginsDoc = 'https://getcomposer.org/doc/06-config.md#allow-plugins';
+            if (
+              'object' !== typeof composerJSON.config ||
+              null === composerJSON.config ||
+              !('allow-plugins' in composerJSON.config)
+            ) {
+              core.error(`Missing ".config.allow-plugins". For more details, see ${allowPluginsDoc}`, {
+                title: 'Missing allow-plugins configuration',
+                file: composerFilePath,
+              });
+              process.exitCode = core.ExitCode.Failure;
+              return;
+            }
+            if (true !== composerJSON.config['allow-plugins']['d3r/composer']) {
+              core.error(`Composer plugin "d3r/composer" must be allowed to run. For more details, see ${allowPluginsDoc}`, {
+                title: 'Invalid allow-plugins configuration',
+                file: composerFilePath,
+              });
+              process.exitCode = core.ExitCode.Failure;
+            }
+      - name: Install Composer dependencies
+        shell: bash
+        run: composer install --no-interaction --no-progress --prefer-dist --optimize-autoloader
+      - name: Run PHPLint
+        shell: bash
+        run: phplint
+      - name: Run PHP_CodeSniffer
+        shell: bash
+        run: phpcs
+      - name: Run PHP DocBlock Checker
+        shell: bash
+        run: phpdoccheck
+      - name: Run PHP Unit tests
+        shell: bash
+        run: vendor/bin/phpunit --exclude-group noci --coverage-text
