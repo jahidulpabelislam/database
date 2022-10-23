@@ -1,5 +1,11 @@
 <?php
 
+namespace JPI\Database;
+
+use PDO;
+use PDOException;
+use PDOStatement;
+
 /**
  * Simple class wrapped around PDO with convenient methods.
  *
@@ -8,13 +14,6 @@
  * @author Jahidul Pabel Islam <me@jahidulpabelislam.com>
  * @copyright 2010-2021 JPI
  */
-
-namespace JPI\Database;
-
-use PDO;
-use PDOException;
-use PDOStatement;
-
 class Connection {
 
     /**
