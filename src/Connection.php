@@ -1,5 +1,11 @@
 <?php
 
+namespace JPI\Database;
+
+use PDO;
+use PDOException;
+use PDOStatement;
+
 /**
  * Simple class wrapped around PDO with convenient methods.
  *
@@ -8,13 +14,6 @@
  * @author Jahidul Pabel Islam <me@jahidulpabelislam.com>
  * @copyright 2010-2021 JPI
  */
-
-namespace JPI\Database;
-
-use PDO;
-use PDOException;
-use PDOStatement;
-
 class Connection {
 
     /**
@@ -25,7 +24,7 @@ class Connection {
     /**
      * Connects to a MySQL engine using PDO.
      *
-     * @param $config array
+     * @param array $config
      * @throws \JPI\Database\Exception
      */
     public function __construct(array $config = []) {
@@ -88,12 +87,12 @@ class Connection {
     /**
      * Executes a SQL query.
      *
-     * @param $query string The SQL query to run
-     * @param $params array|null Array of any params/bindings to use with the SQL query
+     * @param string $query The SQL query to run
+     * @param array|null $params Array of any params/bindings to use with the SQL query
      * @return \PDOStatement
      * @throws \JPI\Database\Exception
      */
-    protected function run(string $query, ?array $params): PDOStatement {
+    protected function run(string $query, ?array $params = null): PDOStatement {
         try {
             // Check if any params/bindings to execute
             if (isset($params)) {
@@ -126,8 +125,8 @@ class Connection {
      *
      * (Used by INSERT, UPDATE & DELETE queries)
      *
-     * @param $query string
-     * @param $params array|null
+     * @param string $query
+     * @param array|null $params
      * @return int
      * @throws \JPI\Database\Exception
      */
@@ -138,8 +137,8 @@ class Connection {
     /**
      * Execute a SELECT query and returns the first row (if found).
      *
-     * @param $query string
-     * @param $params array|null
+     * @param string $query
+     * @param array|null $params
      * @return array|null
      * @throws \JPI\Database\Exception
      */
@@ -155,8 +154,8 @@ class Connection {
     /**
      * Execute a SELECT query and returns all the rows.
      *
-     * @param $query string
-     * @param $params array|null
+     * @param string $query
+     * @param array|null $params
      * @return array[]
      * @throws \JPI\Database\Exception
      */

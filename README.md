@@ -19,7 +19,7 @@ $ composer require jpi/database
 
 ## Usage
 
-Create a instance
+Create an instance
 ```php
 $connection = new Connection([
     "host" => "127.0.0.1",
