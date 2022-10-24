@@ -1,6 +1,6 @@
 <?php
 
-namespace JPI\Database;
+namespace JPI;
 
 use PDO;
 use PDOStatement;
@@ -11,7 +11,7 @@ use PDOStatement;
  * @author Jahidul Pabel Islam <me@jahidulpabelislam.com>
  * @copyright 2012-2022 JPI
  */
-class Connection extends PDO {
+class Database extends PDO {
 
     /**
      * Executes a SQL query.

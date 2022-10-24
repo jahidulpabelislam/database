@@ -23,7 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "JPI\\Database\\": "src/"
+            "JPI\\": "src/"
         }
     }
 }
