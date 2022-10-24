@@ -21,7 +21,7 @@ class Database extends PDO {
      * @return \PDOStatement
      * @throws \PDOException
      */
-    protected function run(string $query, ?array $params = null): PDOStatement {
+    public function execute(string $query, ?array $params = null): PDOStatement {
         if (!isset($params)) {
             return $this->query($query);
         }
@@ -37,20 +37,6 @@ class Database extends PDO {
     }
 
     /**
-     * Executes a SQL query and returns the count of rows affected.
-     *
-     * (Used by INSERT, UPDATE & DELETE queries)
-     *
-     * @param string $query
-     * @param array|null $params
-     * @return int
-     * @throws \PDOException
-     */
-    public function execute(string $query, ?array $params = null): int {
-        return $this->run($query, $params)->rowCount();
-    }
-
-    /**
      * Execute a SELECT query and returns the first row (if found).
      *
      * @param string $query
@@ -59,7 +45,7 @@ class Database extends PDO {
      * @throws \PDOException
      */
     public function getOne(string $query, ?array $params = null): ?array {
-        $row = $this->run($query, $params)->fetch(PDO::FETCH_ASSOC);
+        $row = $this->execute($query, $params)->fetch(PDO::FETCH_ASSOC);
         if ($row !== false) {
             return $row;
         }
@@ -76,7 +62,7 @@ class Database extends PDO {
      * @throws \PDOException
      */
     public function getAll(string $query, ?array $params = null): array {
-        return $this->run($query, $params)->fetchAll(PDO::FETCH_ASSOC);
+        return $this->execute($query, $params)->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
