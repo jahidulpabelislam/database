@@ -35,24 +35,7 @@ class Database extends PDO {
         $stmt->execute($bindings);
         return $stmt;
     }
-
-    /**
-     * Execute a SELECT query and returns the first row (if found).
-     *
-     * @param string $query
-     * @param array|null $params
-     * @return array|null
-     * @throws \PDOException
-     */
-    public function getOne(string $query, ?array $params = null): ?array {
-        $row = $this->execute($query, $params)->fetch(PDO::FETCH_ASSOC);
-        if ($row !== false) {
-            return $row;
-        }
-
-        return null;
-    }
-
+    
     /**
      * Execute a SELECT query and returns all the rows.
      *
@@ -63,6 +46,23 @@ class Database extends PDO {
      */
     public function getAll(string $query, ?array $params = null): array {
         return $this->execute($query, $params)->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Execute a SELECT query and returns the first row (if found).
+     *
+     * @param string $query
+     * @param array|null $params
+     * @return array|null
+     * @throws \PDOException
+     */
+    public function getFirst(string $query, ?array $params = null): ?array {
+        $row = $this->execute($query, $params)->fetch(PDO::FETCH_ASSOC);
+        if ($row !== false) {
+            return $row;
+        }
+
+        return null;
     }
 
     /**
