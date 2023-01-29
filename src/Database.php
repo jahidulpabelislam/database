@@ -3,6 +3,7 @@
 namespace JPI;
 
 use PDO;
+use PDOException;
 use PDOStatement;
 
 /**
@@ -14,50 +15,70 @@ use PDOStatement;
 class Database extends PDO {
 
     /**
-     * Executes a SQL query.
+     * Prepares a query statement and binds params.
      *
-     * @param string $query The SQL query to run
+     * @param string $query The SQL query to prepare
      * @param array|null $params Array of any params/bindings to use with the SQL query
-     * @return \PDOStatement
-     * @throws \PDOException
+     * @return PDOStatement
+     * @throws PDOException
      */
-    public function execute(string $query, ?array $params = null): PDOStatement {
-        if (!isset($params)) {
-            return $this->query($query);
-        }
+    public function prep(string $query, array $params = []): PDOStatement {
+        $statement = $this->prepare($query);
 
-        $bindings = [];
         foreach ($params as $key => $value) {
-            $bindings[":$key"] = $value;
+            $statement->bindValue(":$key", $value);
         }
 
-        $stmt = $this->prepare($query);
-        $stmt->execute($bindings);
-        return $stmt;
+        return $statement;
+    }
+
+    /**
+     * Executes a SQL query with optional params/bindings and returns statement object.
+     *
+     * @param string $query
+     * @param array $params
+     * @return PDOStatement
+     */
+    public function run(string $query, array $params = []): PDOStatement {
+        $statement = $this->prepare($query);
+        $statement->execute();
+        return $statement;
+    }
+
+    /**
+     * Executes a SQL query with optional params/bindings and returns effected rows count.
+     *
+     * @param string $query
+     * @param array $params
+     * @return int
+     * @throws PDOException
+     */
+    public function exec($query, array $params = []): int {
+        return $this->run($query, $params)->rowCount();
     }
 
     /**
      * Execute a SELECT query and returns all the rows.
      *
      * @param string $query
-     * @param array|null $params
+     * @param array $params
      * @return array[]
-     * @throws \PDOException
+     * @throws PDOException
      */
-    public function selectAll(string $query, ?array $params = null): array {
-        return $this->execute($query, $params)->fetchAll(PDO::FETCH_ASSOC);
+    public function selectAll(string $query, array $params = []): array {
+        return $this->run($query, $params)->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
      * Execute a SELECT query and returns the first row (if found).
      *
      * @param string $query
-     * @param array|null $params
+     * @param array $params
      * @return array|null
-     * @throws \PDOException
+     * @throws PDOException
      */
-    public function selectFirst(string $query, ?array $params = null): ?array {
-        $row = $this->execute($query, $params)->fetch(PDO::FETCH_ASSOC);
+    public function selectFirst(string $query, array $params = []): ?array {
+        $row = $this->run($query, $params)->fetch(PDO::FETCH_ASSOC);
         if ($row !== false) {
             return $row;
         }
