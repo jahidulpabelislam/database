@@ -18,7 +18,7 @@ class Database extends PDO {
      * Prepares a query statement and binds params.
      *
      * @param string $query The SQL query to prepare
-     * @param array|null $params Array of any params/bindings to use with the SQL query
+     * @param array $params Array of any params/bindings to use with the SQL query
      * @return PDOStatement
      * @throws PDOException
      */
