@@ -40,7 +40,7 @@ class Database extends PDO {
      * @return PDOStatement
      */
     public function run(string $query, array $params = []): PDOStatement {
-        $statement = $this->prepare($query);
+        $statement = $this->prep($query, $params);
         $statement->execute();
         return $statement;
     }
