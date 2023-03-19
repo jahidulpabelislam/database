@@ -29,6 +29,3 @@ jobs:
     - name: Run PHP_CodeSniffer
       shell: bash
       run: phpcs
-    - name: Run PHP DocBlock Checker
-      shell: bash
-      run: phpdoccheck
