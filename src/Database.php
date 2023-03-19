@@ -94,6 +94,6 @@ class Database extends PDO {
      * @return int|null
      */
     public function getLastInsertedId(): ?int {
-        return $this->lastInsertId();
+        return $this->lastInsertId() ? ((int)$this->lastInsertId()) : null;
     }
 }
