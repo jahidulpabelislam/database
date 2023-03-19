@@ -10,18 +10,12 @@ use PDOStatement;
 
 /**
  * Simple extension to PDO with some extra convenient methods.
- *
- * @author Jahidul Pabel Islam <me@jahidulpabelislam.com>
- * @copyright 2012-2022 JPI
  */
 class Database extends PDO {
 
     /**
      * Prepares a query statement and binds params.
      *
-     * @param string $query The SQL query to prepare
-     * @param array $params Array of any params/bindings to use with the SQL query
-     * @return PDOStatement
      * @throws PDOException
      */
     public function prep(string $query, array $params = []): PDOStatement {
@@ -36,10 +30,6 @@ class Database extends PDO {
 
     /**
      * Executes a SQL query with optional params/bindings and returns statement object.
-     *
-     * @param string $query
-     * @param array $params
-     * @return PDOStatement
      */
     public function run(string $query, array $params = []): PDOStatement {
         $statement = $this->prep($query, $params);
@@ -49,11 +39,6 @@ class Database extends PDO {
 
     /**
      * Executes a SQL query with optional params/bindings and returns effected rows count.
-     *
-     * @param string $query
-     * @param array $params
-     * @return int
-     * @throws PDOException
      */
     public function exec($query, array $params = []): int {
         return $this->run($query, $params)->rowCount();
@@ -62,8 +47,6 @@ class Database extends PDO {
     /**
      * Execute a SELECT query and returns all the rows.
      *
-     * @param string $query
-     * @param array $params
      * @return array[]
      * @throws PDOException
      */
@@ -74,9 +57,6 @@ class Database extends PDO {
     /**
      * Execute a SELECT query and returns the first row (if found).
      *
-     * @param string $query
-     * @param array $params
-     * @return array|null
      * @throws PDOException
      */
     public function selectFirst(string $query, array $params = []): ?array {
@@ -90,8 +70,6 @@ class Database extends PDO {
 
     /**
      * Get the ID from the last INSERT query.
-     *
-     * @return int|null
      */
     public function getLastInsertedId(): ?int {
         return $this->lastInsertId() ? ((int)$this->lastInsertId()) : null;
