@@ -5,9 +5,9 @@
 [![Total Downloads](https://poser.pugx.org/jpi/database/downloads)](https://packagist.org/packages/jpi/database)
 [![Latest Unstable Version](https://poser.pugx.org/jpi/database/v/unstable)](https://packagist.org/packages/jpi/database)
 [![License](https://poser.pugx.org/jpi/database/license)](https://packagist.org/packages/jpi/database)
-![GitHub last commit (branch)](https://img.shields.io/github/last-commit/jahidulpabelislam/database/master.svg?label=last%20activity)
+![GitHub last commit (branch)](https://img.shields.io/github/last-commit/jahidulpabelislam/database/2.x.svg?label=last%20activity)
 
-Simple library to make interactions with a database easier.
+Simple extension to PDO with some extra convenient methods.
 
 ## Installation
 
@@ -19,32 +19,26 @@ $ composer require jpi/database
 
 ## Usage
 
-Create an instance
-```php
-$connection = new Connection([
-    "host" => "127.0.0.1",
-    "database" => "test",
-    "username" => "root",
-    "password" => "root",
-]);
-```
+Extra Methods:
+- `prep`: when you want to bind some parameters to a query, returns `PDOStatement`
+- `run`: when you bind some parameters to a query and want to execute it, returns `PDOStatement`
+- `selectAll`: for a `SELECT` query, returns a multidimensional array of all the rows found
+- `selectFirst`: for a `SELECT` query that has `LIMIT 1`, returns an associative array of the first row found (if any)
+- `getLastInsertedId`: helpful after a `INSERT` query, returns the ID of the newly inserted row
 
-Available Methods:
-- `getAll`: to use for a `SELECT` query which will return a multidimensional array of all the rows found
-- `getOne`: to use for a `SELECT` query which will return an associative array of the first row found (if any)
-- `execute`: to use for `INSERT`, `UPDATE` and `DELETE` queries, which will return the number of rows affected
-- `getLastInsertedId`: to use after a `INSERT` query, which returns the ID of the newly inserted row
+Overridden Methods:
+- `exec`: for `INSERT`, `UPDATE` and `DELETE` queries, returns the number of rows affected
 
-`getAll`, `getOne` & `execute` take the query as the first parameter (required), and an array of params to bind to the query (optional)
+All methods except `getLastInsertedId` take the query as the first parameter (required), and an array of params to bind to the query (optional).
 
 ### Examples:
 
-(Assuming connection has been created and set to a variable named `$connection`)
+(Assuming instance has been created and set to a variable named `$connection`)
 
-#### getAll:
+#### selectAll:
 
 ```php
-$rows = $connection->getAll("SELECT * FROM users;");
+$rows = $connection->selectAll("SELECT * FROM users;");
 
 /**
 $rows = [
@@ -69,10 +63,10 @@ $rows = [
 */
 ```
 
-#### getOne:
+#### selectFirst:
 
 ```php
-$row = $connection->getOne("SELECT * FROM users LIMIT 1;");
+$row = $connection->selectFirst("SELECT * FROM users LIMIT 1;");
 
 /**
 $row = [
@@ -86,11 +80,11 @@ $row = [
 */
 ```
 
-#### execute:
+#### exec:
 
 ```php
 // INSERT
-$numberOfRowsAffected = $connection->execute(
+$numberOfRowsAffected = $connection->exec(
     "INSERT INTO users (first_name, last_name, email, password) VALUES (:first_name, :last_name, :email, :password);",
     [
         "first_name" => "Jahidul",
@@ -101,7 +95,7 @@ $numberOfRowsAffected = $connection->execute(
 );
 
 // UPDATE
-$numberOfRowsAffected = $connection->execute(
+$numberOfRowsAffected = $connection->exec(
     "UPDATE users SET first_name = :first_name WHERE id = :id;",
     [
         "id" => 1,
@@ -110,7 +104,7 @@ $numberOfRowsAffected = $connection->execute(
 );
 
 // DELETE
-$numberOfRowsAffected = $connection->execute("DELETE FROM users WHERE id = :id;", ["id" => 1]);
+$numberOfRowsAffected = $connection->exec("DELETE FROM users WHERE id = :id;", ["id" => 1]);
 ```
 
 ## Changelog
