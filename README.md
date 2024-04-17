@@ -107,10 +107,6 @@ $numberOfRowsAffected = $connection->exec(
 $numberOfRowsAffected = $connection->exec("DELETE FROM users WHERE id = :id;", ["id" => 1]);
 ```
 
-## Changelog
-
-See [CHANGELOG](CHANGELOG.md)
-
 ## Support
 
 If you found this library interesting or useful please do spread the word of this library: share on your social's, star on GitHub, etc.
@@ -121,6 +117,6 @@ If you find any issues or have any feature requests, you can open a [issue](http
 
 -   [Jahidul Pabel Islam](https://jahidulpabelislam.com/) [<me@jahidulpabelislam.com>](mailto:me@jahidulpabelislam.com)
 
-## License
+## Licence
 
-This module is licensed under the General Public License - see the [License](LICENSE.md) file for details
+This module is licenced under the General Public licence - see the [licence](LICENSE.md) file for details.
