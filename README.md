@@ -20,14 +20,14 @@ $ composer require jpi/database
 ## Usage
 
 Extra Methods:
-- `prep`: when you want to bind some parameters to a query, returns `PDOStatement`
-- `run`: when you bind some parameters to a query and want to execute it, returns `PDOStatement`
-- `selectAll`: for a `SELECT` query, returns a multidimensional array of all the rows found
-- `selectFirst`: for a `SELECT` query that has `LIMIT 1`, returns an associative array of the first row found (if any)
-- `getLastInsertedId`: helpful after a `INSERT` query, returns the ID of the newly inserted row
+- `prep(string, array): PDOStatement`: when you want to bind some parameters to a query
+- `run(string, array): PDOStatement`: when you bind some parameters to a query and want to execute it
+- `selectAll(string, array): array`: for a `SELECT` query, returns a multidimensional array of all the rows found
+- `selectFirst(string, array): array`: for a `SELECT` query that has `LIMIT 1`, returns an associative array of the first row found (if any)
+- `getLastInsertedId: int|null`: helpful after a `INSERT` query, returns the ID of the newly inserted row
 
 Overridden Methods:
-- `exec`: for `INSERT`, `UPDATE` and `DELETE` queries, returns the number of rows affected
+- `exec(string, array): int`: for `INSERT`, `UPDATE` and `DELETE` queries, returns the number of rows affected
 
 All methods except `getLastInsertedId` take the query as the first parameter (required), and an array of params to bind to the query (optional).
 
@@ -119,4 +119,4 @@ If you find any issues or have any feature requests, you can open a [issue](http
 
 ## Licence
 
-This module is licenced under the General Public licence - see the [licence](LICENSE.md) file for details.
+This module is licenced under the General Public Licence - see the [licence](LICENSE.md) file for details.
