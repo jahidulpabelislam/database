@@ -24,9 +24,7 @@ $ composer require jpi/database
 First, create an instance of the Database class by providing PDO connection parameters:
 
 ```php
-use JPI\Database;
-
-$connection = new Database(
+$connection = new \JPI\Database(
     "mysql:host=localhost;dbname=your_database",
     "username",
     "password"
