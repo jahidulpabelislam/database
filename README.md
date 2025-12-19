@@ -19,7 +19,7 @@ $ composer require jpi/database
 
 ## Usage
 
-### Initialization
+### Initialisation
 
 First, create an instance of the Database class by providing PDO connection parameters:
 
