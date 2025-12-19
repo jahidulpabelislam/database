@@ -178,6 +178,6 @@ If you find any issues or have any feature requests, you can open a [issue](http
 
 -   [Jahidul Pabel Islam](https://jahidulpabelislam.com/) [<me@jahidulpabelislam.com>](mailto:me@jahidulpabelislam.com)
 
-## License
+## Licence
 
-This module is licensed under the General Public License - see the [LICENSE](LICENSE.md) file for details.
+This module is licenced under the General Public Licence - see the [licence](LICENSE.md) file for details.
