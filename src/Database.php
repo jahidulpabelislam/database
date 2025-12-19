@@ -38,7 +38,7 @@ class Database extends PDO {
     }
 
     /**
-     * Executes a SQL query with optional params/bindings and returns effected rows count.
+     * Executes a SQL query with optional params/bindings and returns affected rows count.
      */
     public function exec($query, array $params = []): int {
         return $this->run($query, $params)->rowCount();

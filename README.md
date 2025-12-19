@@ -19,12 +19,26 @@ $ composer require jpi/database
 
 ## Usage
 
+### Initialization
+
+First, create an instance of the Database class by providing PDO connection parameters:
+
+```php
+$connection = new \JPI\Database(
+    "mysql:host=localhost;dbname=your_database",
+    "username",
+    "password"
+);
+```
+
+### Available Methods
+
 Extra Methods:
 - `prep(string, array): PDOStatement`: when you want to bind some parameters to a query
 - `run(string, array): PDOStatement`: when you bind some parameters to a query and want to execute it
 - `selectAll(string, array): array`: for a `SELECT` query, returns a multidimensional array of all the rows found
-- `selectFirst(string, array): array`: for a `SELECT` query that has `LIMIT 1`, returns an associative array of the first row found (if any)
-- `getLastInsertedId: int|null`: helpful after a `INSERT` query, returns the ID of the newly inserted row
+- `selectFirst(string, array): array|null`: for a `SELECT` query that has `LIMIT 1`, returns an associative array of the first row found (if any)
+- `getLastInsertedId(): int|null`: helpful after an `INSERT` query, returns the ID of the newly inserted row
 
 Overridden Methods:
 - `exec(string, array): int`: for `INSERT`, `UPDATE` and `DELETE` queries, returns the number of rows affected
@@ -34,6 +48,32 @@ All methods except `getLastInsertedId` take the query as the first parameter (re
 ### Examples:
 
 (Assuming instance has been created and set to a variable named `$connection`)
+
+#### prep:
+
+```php
+// Prepare a statement with bound parameters (without executing)
+$statement = $connection->prep(
+    "SELECT * FROM users WHERE email = :email;",
+    ["email" => "jahidul@jahidulpabelislam.com"]
+);
+
+// You can now execute it later
+$statement->execute();
+```
+
+#### run:
+
+```php
+// Prepare and execute a query in one step
+$statement = $connection->run(
+    "SELECT * FROM users WHERE email = :email;",
+    ["email" => "jahidul@jahidulpabelislam.com"]
+);
+
+// Fetch results from the statement
+$users = $statement->fetchAll(PDO::FETCH_ASSOC);
+```
 
 #### selectAll:
 
@@ -105,6 +145,25 @@ $numberOfRowsAffected = $connection->exec(
 
 // DELETE
 $numberOfRowsAffected = $connection->exec("DELETE FROM users WHERE id = :id;", ["id" => 1]);
+```
+
+#### getLastInsertedId:
+
+```php
+// INSERT a new user
+$connection->exec(
+    "INSERT INTO users (first_name, last_name, email, password) VALUES (:first_name, :last_name, :email, :password);",
+    [
+        "first_name" => "Jahidul",
+        "last_name" => "Islam",
+        "email" => "jahidul@jahidulpabelislam.com",
+        "password" => "password",
+    ]
+);
+
+// Get the ID of the newly inserted row
+$newUserId = $connection->getLastInsertedId();
+// $newUserId = 3
 ```
 
 ## Support
