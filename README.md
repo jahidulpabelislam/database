@@ -34,6 +34,7 @@ $connection = new \JPI\Database(
 ### Available Methods
 
 Extra Methods:
+
 - `prep(string, array): PDOStatement`: when you want to bind some parameters to a query
 - `run(string, array): PDOStatement`: when you bind some parameters to a query and want to execute it
 - `selectAll(string, array): array`: for a `SELECT` query, returns a multidimensional array of all the rows found
@@ -41,6 +42,7 @@ Extra Methods:
 - `getLastInsertedId(): int|null`: helpful after an `INSERT` query, returns the ID of the newly inserted row
 
 Overridden Methods:
+
 - `exec(string, array): int`: for `INSERT`, `UPDATE` and `DELETE` queries, returns the number of rows affected
 
 All methods except `getLastInsertedId` take the query as the first parameter (required), and an array of params to bind to the query (optional).
@@ -174,7 +176,7 @@ If you find any issues or have any feature requests, you can open a [issue](http
 
 ## Authors
 
--   [Jahidul Pabel Islam](https://jahidulpabelislam.com/) [<me@jahidulpabelislam.com>](mailto:me@jahidulpabelislam.com)
+- [Jahidul Pabel Islam](https://jahidulpabelislam.com/) [<me@jahidulpabelislam.com>](mailto:me@jahidulpabelislam.com)
 
 ## Licence
 
