@@ -74,7 +74,7 @@ $statement = $connection->run(
 );
 
 // Fetch results from the statement
-$users = $statement->fetchAll(PDO::FETCH_ASSOC);
+$rows = $statement->fetchAll(PDO::FETCH_ASSOC);
 ```
 
 #### selectAll:
@@ -164,7 +164,7 @@ $connection->exec(
 );
 
 // Get the ID of the newly inserted row
-$newUserId = $connection->getLastInsertedId();
+$newRowId = $connection->getLastInsertedId();
 // $newUserId = 3
 ```
 
