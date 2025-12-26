@@ -9,6 +9,17 @@
 
 Simple extension to PDO with some extra convenient methods.
 
+## Features
+
+- **Extends PDO** with user-friendly, convenient helper methods for common database operations
+- **Simplified parameter binding** for SQL queries using `prep` and `run` methods
+- **`selectAll`** — fetches all rows as a multidimensional array
+- **`selectFirst`** — fetches the first row as an associative array
+- **`getLastInsertedId`** — retrieves the last inserted row's ID
+- **Overridden `exec`** for executing and counting affected rows for INSERT, UPDATE, DELETE operations
+- **All query methods support parameter binding** for secure SQL execution
+- **Fully compatible with standard PDO usage** — use it as a drop-in replacement
+
 ## Installation
 
 Use [Composer](https://getcomposer.org/)
