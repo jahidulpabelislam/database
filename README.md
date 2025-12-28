@@ -7,18 +7,7 @@
 [![License](https://poser.pugx.org/jpi/database/license)](https://packagist.org/packages/jpi/database)
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/jahidulpabelislam/database/2.x.svg?label=last%20activity)
 
-Simple extension to PDO with some extra convenient methods.
-
-## Features
-
-- **Extends PDO** with user-friendly, convenient helper methods for common database operations
-- **Simplified parameter binding** for SQL queries using `prep` and `run` methods
-- **`selectAll`** — fetches all rows as a multidimensional array
-- **`selectFirst`** — fetches the first row as an associative array (or null if no rows found)
-- **`getLastInsertedId`** — retrieves the last inserted row's ID
-- **Overridden `exec`** for executing and counting affected rows for INSERT, UPDATE, DELETE operations
-- **All query methods support parameter binding** for secure SQL execution
-- **Fully compatible with standard PDO usage** — use it as a drop-in replacement
+Simple extension to PDO with some extra convenient methods including simplified parameter binding (`prep`, `run`), easy data fetching (`selectAll`, `selectFirst`), and utility methods (`getLastInsertedId`, overridden `exec`). Fully compatible with standard PDO usage.
 
 ## Installation
 
