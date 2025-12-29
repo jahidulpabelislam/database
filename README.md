@@ -7,7 +7,7 @@
 [![License](https://poser.pugx.org/jpi/database/license)](https://packagist.org/packages/jpi/database)
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/jahidulpabelislam/database/2.x.svg?label=last%20activity)
 
-Simple extension to PDO with some extra convenient methods including simplified parameter binding (`prep`, `run`), easy data fetching (`selectAll`, `selectFirst`), and utility methods (`getLastInsertedId`, overridden `exec`). Fully compatible with standard PDO usage.
+Simple extension to `PDO` with some extra convenient methods including simplified parameter binding and easy data fetching. Fully compatible with standard PDO usage, so easy to use it as a drop-in replacement.
 
 ## Installation
 
