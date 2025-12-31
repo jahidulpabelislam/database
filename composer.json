@@ -1,6 +1,6 @@
 {
     "name": "jpi/database",
-    "description": "Simple extension to PDO",
+    "description": "Simple extension to PDO with some extra convenient methods including simplified parameter binding and easy data fetching. Fully compatible with standard PDO usage, making it easy to use as a drop-in replacement.",
     "license": "GPL-3.0-only",
     "authors": [
         {
